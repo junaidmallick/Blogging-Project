@@ -32,7 +32,7 @@ const createBlog = async (req, res) =>{
 const getBlogs= async (req, res) => {
     try {
         const data = req.query
-        const blogs = await BlogModel.find(data).populate("authorId")
+        const blogs = await BlogModel.find(data,{isDeleted:false},{isPublished:true}).populate("authorId")
         if (blogs.length == 0) return res.status(404).send({ status: false, msg: "No blogs Available." })
         res.status(200).send({ status: true, count: blogs.length, data: blogs });
     }
